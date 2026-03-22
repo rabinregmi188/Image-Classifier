@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Classifier</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Full-Stack Vision Studio</p>
+          <h1>Image Classifier</h1>
+          <p class="hero-text">
+            Upload an image, run torch-powered visual analysis, and explore prediction history in a bright,
+            product-style dashboard.
+          </p>
+          <div class="hero-pills">
+            <span>FastAPI</span>
+            <span>PyTorch</span>
+            <span>SQLite</span>
+            <span>JavaScript</span>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="hero-orb orb-one"></div>
+          <div class="hero-orb orb-two"></div>
+          <div class="hero-card">
+            <p class="hero-card-label">Top categories</p>
+            <ul>
+              <li><span>Landscape</span><strong>Color-rich outdoor scenes</strong></li>
+              <li><span>Portrait</span><strong>People-focused compositions</strong></li>
+              <li><span>Document</span><strong>High-contrast text surfaces</strong></li>
+              <li><span>Night</span><strong>Low-light, cool-toned imagery</strong></li>
+              <li><span>Abstract</span><strong>Bold contrast and saturation</strong></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="upload-panel card">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Analyze Image</p>
+              <h2>Upload a file</h2>
+            </div>
+            <button id="sampleButton" class="ghost-button" type="button">Try Sample Data</button>
+          </div>
+
+          <label id="dropZone" class="drop-zone" for="fileInput">
+            <input id="fileInput" type="file" accept="image/*" hidden />
+            <div class="drop-zone-content">
+              <div class="drop-icon">+</div>
+              <p class="drop-title">Drop an image here or click to browse</p>
+              <p class="drop-subtitle">PNG, JPG, WEBP, or GIF</p>
+            </div>
+          </label>
+
+          <div id="previewState" class="preview-state hidden">
+            <img id="previewImage" alt="Uploaded preview" />
+            <div class="preview-meta">
+              <div>
+                <p class="eyebrow">Selected file</p>
+                <h3 id="previewName">image.png</h3>
+              </div>
+              <button id="analyzeButton" class="primary-button" type="button">Run Prediction</button>
+            </div>
+          </div>
+
+          <div id="statusBanner" class="status-banner hidden"></div>
+        </section>
+
+        <section class="stats-grid">
+          <article class="stat-card card">
+            <p class="stat-label">Predictions logged</p>
+            <h3 id="totalPredictions">0</h3>
+          </article>
+          <article class="stat-card card">
+            <p class="stat-label">Average confidence</p>
+            <h3 id="averageConfidence">0%</h3>
+          </article>
+          <article class="stat-card card">
+            <p class="stat-label">Most common class</p>
+            <h3 id="topLabel">None yet</h3>
+          </article>
+        </section>
+
+        <section class="results-grid">
+          <article class="result-card card">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Prediction</p>
+                <h2>Latest result</h2>
+              </div>
+            </div>
+            <div id="emptyResult" class="empty-state">
+              Upload an image to see confidence scores, dimensions, and extracted features.
+            </div>
+            <div id="resultContent" class="hidden">
+              <div class="result-header">
+                <img id="resultImage" alt="Prediction result" />
+                <div class="result-summary">
+                  <p class="eyebrow">Primary label</p>
+                  <h3 id="resultLabel">Landscape</h3>
+                  <p id="resultConfidence" class="confidence-text">Confidence: 0%</p>
+                  <p id="resultDimensions" class="dimensions-text">0 x 0</p>
+                </div>
+              </div>
+              <div>
+                <p class="subheading">Top predictions</p>
+                <div id="predictionBars" class="prediction-bars"></div>
+              </div>
+              <div>
+                <p class="subheading">Visual features</p>
+                <div id="featureGrid" class="feature-grid"></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="history-card card">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Prediction History</p>
+                <h2>Recent uploads</h2>
+              </div>
+            </div>
+            <div id="historyGrid" class="history-grid"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
