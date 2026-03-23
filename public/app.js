@@ -168,7 +168,7 @@ async function loadHistory() {
     .map(
       (item) => `
         <article class="history-item">
-          <img src="/uploads/${item.stored_name}" alt="${item.label}" />
+          <img src="${item.image_url}" alt="${item.label}" />
           <div class="history-meta">
             <div class="history-chip">${item.label}</div>
             <strong>${Math.round(item.confidence * 100)}% confidence</strong>
