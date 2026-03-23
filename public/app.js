@@ -81,7 +81,7 @@ function renderResult(result) {
   state.latestResult = result
   emptyResult.classList.add("hidden")
   resultContent.classList.remove("hidden")
-  resultImage.src = result.image_url
+  resultImage.src = state.previewUrl
   resultLabel.textContent = result.label
   resultConfidence.textContent = `Confidence: ${Math.round(result.confidence * 100)}%`
   resultDimensions.textContent = `${result.width} x ${result.height}`
@@ -134,7 +134,7 @@ async function analyzeCurrentFile() {
   analyzeButton.disabled = true
 
   try {
-    const response = await fetch("/api/predict", {
+    const response = await fetch("/api?action=predict", {
       method: "POST",
       body: formData,
     })
@@ -154,7 +154,7 @@ async function analyzeCurrentFile() {
 }
 
 async function loadHistory() {
-  const response = await fetch("/api/history")
+  const response = await fetch("/api?action=history")
   const payload = await response.json()
 
   if (!payload.items.length) {
@@ -168,7 +168,7 @@ async function loadHistory() {
     .map(
       (item) => `
         <article class="history-item">
-          <img src="${item.image_url}" alt="${item.label}" />
+          <div class="history-thumb" aria-hidden="true">${item.label.slice(0, 1)}</div>
           <div class="history-meta">
             <div class="history-chip">${item.label}</div>
             <strong>${Math.round(item.confidence * 100)}% confidence</strong>
@@ -182,7 +182,7 @@ async function loadHistory() {
 }
 
 async function loadStats() {
-  const response = await fetch("/api/stats")
+  const response = await fetch("/api?action=stats")
   const payload = await response.json()
   totalPredictions.textContent = String(payload.total_predictions)
   averageConfidence.textContent = `${Math.round((payload.average_confidence || 0) * 100)}%`
