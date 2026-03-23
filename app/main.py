@@ -13,8 +13,9 @@ from .classifier import VisualClassifier
 from .database import fetch_history, fetch_stats, init_db, insert_prediction
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-STATIC_DIR = BASE_DIR / "static"
-UPLOADS_DIR = Path(os.environ.get("UPLOADS_DIR", str(BASE_DIR / "uploads")))
+PUBLIC_DIR = BASE_DIR / "public"
+DEFAULT_UPLOADS_DIR = Path("/tmp/image-classifier/uploads") if os.environ.get("VERCEL") else BASE_DIR / "uploads"
+UPLOADS_DIR = Path(os.environ.get("UPLOADS_DIR", str(DEFAULT_UPLOADS_DIR)))
 UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
 app = FastAPI(title="Image Classifier")
@@ -26,7 +27,6 @@ app.add_middleware(
 )
 
 classifier = VisualClassifier()
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.mount("/uploads", StaticFiles(directory=UPLOADS_DIR), name="uploads")
 
 
@@ -94,12 +94,12 @@ async def predict(file: UploadFile = File(...)) -> dict[str, object]:
 
 @app.get("/")
 def index() -> FileResponse:
-    return FileResponse(STATIC_DIR / "index.html")
+    return FileResponse(PUBLIC_DIR / "index.html")
 
 
 @app.get("/{full_path:path}")
 def spa_fallback(full_path: str) -> FileResponse:
-    candidate = STATIC_DIR / full_path
+    candidate = PUBLIC_DIR / full_path
     if candidate.exists() and candidate.is_file():
         return FileResponse(candidate)
-    return FileResponse(STATIC_DIR / "index.html")
+    return FileResponse(PUBLIC_DIR / "index.html")

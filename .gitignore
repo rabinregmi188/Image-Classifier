@@ -4,3 +4,5 @@ __pycache__/
 data/predictions.db
 uploads/*
 !uploads/.gitkeep
+public/uploads/*
+!public/uploads/.gitkeep

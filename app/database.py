@@ -8,7 +8,8 @@ from typing import Any
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
-DB_PATH = Path(os.environ.get("DATABASE_PATH", str(DATA_DIR / "predictions.db")))
+DEFAULT_DB_PATH = Path("/tmp/image-classifier/predictions.db") if os.environ.get("VERCEL") else DATA_DIR / "predictions.db"
+DB_PATH = Path(os.environ.get("DATABASE_PATH", str(DEFAULT_DB_PATH)))
 
 
 def get_connection() -> sqlite3.Connection:
