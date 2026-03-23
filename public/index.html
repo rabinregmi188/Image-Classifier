@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <div class="page-shell">
@@ -19,8 +19,8 @@
           <p class="eyebrow">Full-Stack Vision Studio</p>
           <h1>Image Classifier</h1>
           <p class="hero-text">
-            Upload an image, run fast visual analysis, and explore prediction history in a bright,
-            product-style dashboard.
+            Drop in any image, run instant client-side analysis, and review a polished visual breakdown
+            without sending your file to a server.
           </p>
           <div class="hero-pills">
             <span>JavaScript</span>
@@ -33,7 +33,7 @@
           <div class="hero-orb orb-one"></div>
           <div class="hero-orb orb-two"></div>
           <div class="hero-card">
-            <p class="hero-card-label">Top categories</p>
+            <p class="hero-card-label">What It Detects Best</p>
             <ul>
               <li><span>Landscape</span><strong>Color-rich outdoor scenes</strong></li>
               <li><span>Portrait</span><strong>People-focused compositions</strong></li>
@@ -52,7 +52,7 @@
               <p class="eyebrow">Analyze Image</p>
               <h2>Upload a file</h2>
             </div>
-            <button id="sampleButton" class="ghost-button" type="button">Try Sample Data</button>
+            <button id="sampleButton" class="ghost-button" type="button">Load Sample</button>
           </div>
 
           <label id="dropZone" class="drop-zone" for="fileInput">
@@ -60,7 +60,7 @@
             <div class="drop-zone-content">
               <div class="drop-icon">+</div>
               <p class="drop-title">Drop an image here or click to browse</p>
-              <p class="drop-subtitle">PNG, JPG, WEBP, or GIF</p>
+              <p class="drop-subtitle">PNG, JPG, WEBP, or GIF. Analysis runs locally in your browser.</p>
             </div>
           </label>
 
@@ -80,7 +80,7 @@
 
         <section class="stats-grid">
           <article class="stat-card card">
-            <p class="stat-label">Predictions logged</p>
+            <p class="stat-label">Classifications saved</p>
             <h3 id="totalPredictions">0</h3>
           </article>
           <article class="stat-card card">
@@ -102,7 +102,7 @@
               </div>
             </div>
             <div id="emptyResult" class="empty-state">
-              Upload an image to see confidence scores, dimensions, and extracted features.
+              Upload an image to unlock confidence bars, feature signals, and a category prediction.
             </div>
             <div id="resultContent" class="hidden">
               <div class="result-header">
@@ -119,7 +119,7 @@
                 <div id="predictionBars" class="prediction-bars"></div>
               </div>
               <div>
-                <p class="subheading">Visual features</p>
+                <p class="subheading">Signal Breakdown</p>
                 <div id="featureGrid" class="feature-grid"></div>
               </div>
             </div>
@@ -129,7 +129,7 @@
             <div class="section-heading">
               <div>
                 <p class="eyebrow">Prediction History</p>
-                <h2>Recent uploads</h2>
+                <h2>Recent analyses</h2>
               </div>
             </div>
             <div id="historyGrid" class="history-grid"></div>
@@ -138,6 +138,6 @@
       </main>
     </div>
 
-    <script src="/app.js" defer></script>
+    <script src="./app.js" defer></script>
   </body>
 </html>

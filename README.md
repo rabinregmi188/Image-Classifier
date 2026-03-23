@@ -1,39 +1,34 @@
 # Image Classifier
 
-Image Classifier is a full-stack computer vision dashboard built with FastAPI, NumPy, SQLite, and a colorful frontend. Users can upload an image, run visual classification, inspect confidence scores, and review stored prediction history.
+Image Classifier is a polished browser-based vision demo that analyzes uploaded images directly on the client side. It estimates a best-fit category, surfaces confidence scores, breaks down visual signals like brightness and contrast, and stores recent analyses in local history.
 
-## Features
+## Live Demo
 
-- Image upload with drag-and-drop UI
-- NumPy-based visual classification pipeline
-- Top-3 confidence scores and extracted visual features
-- Prediction history persisted with SQLite
-- Responsive dashboard with bright gradient styling
-- FastAPI backend serving both API routes and frontend assets
+- Portfolio route: https://rabin-portfolio-rust.vercel.app/image-classifier/
+- Portfolio homepage: https://rabin-portfolio-rust.vercel.app/
+- Repository: https://github.com/rabinregmi188/Image-Classifier
 
-## Tech Stack
+## Highlights
 
-- FastAPI
-- NumPy
-- SQLite
+- Drag-and-drop upload flow with instant preview
+- Client-side image analysis using the Canvas API
+- Top-3 prediction scoring with animated confidence bars
+- Signal breakdown cards for brightness, contrast, saturation, and scene bias
+- Local history saved with `localStorage`
+- Responsive dashboard with colorful glassmorphism styling
+
+## Stack
+
 - JavaScript
 - HTML
 - CSS
-
-## Vercel Deployment
-
-This repo is structured for Vercel's Python runtime:
-
-- root `app.py` exports the FastAPI `app`
-- frontend assets live in `public/`
-- uploads and SQLite history default to `/tmp` on Vercel
-
-Important: Vercel's filesystem is ephemeral, so uploaded files and prediction history can reset between deployments or cold starts unless you move them to external storage.
+- Canvas API
+- LocalStorage
 
 ## Run locally
 
-```bash
-python3 -m uvicorn server:app --reload
-```
+Open `public/index.html` in a browser, or serve the folder with a simple static server.
 
-Then open `http://127.0.0.1:8000`.
+## Project Notes
+
+This version is intentionally static so it can deploy cleanly inside the portfolio, the same way the other live project routes work.
