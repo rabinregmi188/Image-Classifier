@@ -1,11 +1,11 @@
 # Image Classifier
 
-Image Classifier is a full-stack computer vision dashboard built with FastAPI, PyTorch, SQLite, and a colorful frontend. Users can upload an image, run visual classification, inspect confidence scores, and review stored prediction history.
+Image Classifier is a full-stack computer vision dashboard built with FastAPI, NumPy, SQLite, and a colorful frontend. Users can upload an image, run visual classification, inspect confidence scores, and review stored prediction history.
 
 ## Features
 
 - Image upload with drag-and-drop UI
-- Torch-powered visual classification pipeline
+- NumPy-based visual classification pipeline
 - Top-3 confidence scores and extracted visual features
 - Prediction history persisted with SQLite
 - Responsive dashboard with bright gradient styling
@@ -14,7 +14,7 @@ Image Classifier is a full-stack computer vision dashboard built with FastAPI, P
 ## Tech Stack
 
 - FastAPI
-- PyTorch
+- NumPy
 - SQLite
 - JavaScript
 - HTML

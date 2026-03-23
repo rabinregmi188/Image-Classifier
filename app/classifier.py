@@ -5,14 +5,13 @@ from io import BytesIO
 from typing import Any
 
 import numpy as np
-import torch
 from PIL import Image
 
 
 @dataclass(frozen=True)
 class LabelPrototype:
     label: str
-    vector: torch.Tensor
+    vector: np.ndarray
 
 
 class VisualClassifier:
@@ -23,26 +22,26 @@ class VisualClassifier:
         self.prototypes = [
             LabelPrototype(
                 "Landscape",
-                torch.tensor([0.62, 0.28, 0.50, 0.25, 0.36, 0.48, 0.26, 0.34, 0.10, 0.42]),
+                np.array([0.62, 0.28, 0.50, 0.25, 0.36, 0.48, 0.26, 0.34, 0.10, 0.42], dtype=np.float32),
             ),
             LabelPrototype(
                 "Portrait",
-                torch.tensor([0.58, 0.24, 0.40, 0.42, 0.16, 0.12, 0.18, 0.82, 0.05, 0.71]),
+                np.array([0.58, 0.24, 0.40, 0.42, 0.16, 0.12, 0.18, 0.82, 0.05, 0.71], dtype=np.float32),
             ),
             LabelPrototype(
                 "Document",
-                torch.tensor([0.86, 0.22, 0.05, 0.12, 0.10, 0.08, 0.64, 0.24, 0.92, 0.38]),
+                np.array([0.86, 0.22, 0.05, 0.12, 0.10, 0.08, 0.64, 0.24, 0.92, 0.38], dtype=np.float32),
             ),
             LabelPrototype(
                 "Night",
-                torch.tensor([0.18, 0.34, 0.25, 0.08, 0.56, 0.10, 0.22, 0.31, 0.02, 0.48]),
+                np.array([0.18, 0.34, 0.25, 0.08, 0.56, 0.10, 0.22, 0.31, 0.02, 0.48], dtype=np.float32),
             ),
             LabelPrototype(
                 "Abstract",
-                torch.tensor([0.52, 0.58, 0.81, 0.40, 0.32, 0.28, 0.71, 0.44, 0.06, 0.35]),
+                np.array([0.52, 0.58, 0.81, 0.40, 0.32, 0.28, 0.71, 0.44, 0.06, 0.35], dtype=np.float32),
             ),
         ]
-        self.prototype_matrix = torch.stack([item.vector for item in self.prototypes])
+        self.prototype_matrix = np.stack([item.vector for item in self.prototypes])
 
     def predict(self, image_bytes: bytes) -> dict[str, Any]:
         image = Image.open(BytesIO(image_bytes)).convert("RGB")
@@ -50,7 +49,7 @@ class VisualClassifier:
         image_array = np.asarray(image, dtype=np.float32) / 255.0
 
         features = self._extract_features(image_array, width, height)
-        feature_vector = torch.tensor(
+        feature_vector = np.array(
             [
                 features["brightness"],
                 features["contrast"],
@@ -63,18 +62,19 @@ class VisualClassifier:
                 features["document_bias"],
                 features["center_focus"],
             ],
-            dtype=torch.float32,
+            dtype=np.float32,
         )
 
-        distances = torch.linalg.norm(self.prototype_matrix - feature_vector, dim=1)
+        distances = np.linalg.norm(self.prototype_matrix - feature_vector, axis=1)
         logits = -4.0 * distances
-        probabilities = torch.softmax(logits, dim=0)
+        logits = logits - np.max(logits)
+        probabilities = np.exp(logits) / np.exp(logits).sum()
 
         ranked = sorted(
             (
                 {
                     "label": prototype.label,
-                    "confidence": round(float(probability.item()), 4),
+                    "confidence": round(float(probability), 4),
                 }
                 for prototype, probability in zip(self.prototypes, probabilities, strict=True)
             ),
