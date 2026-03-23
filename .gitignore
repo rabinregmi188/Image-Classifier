@@ -6,3 +6,5 @@ uploads/*
 !uploads/.gitkeep
 public/uploads/*
 !public/uploads/.gitkeep
+.vercel
+.env*.local
