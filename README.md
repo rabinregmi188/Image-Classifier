@@ -33,7 +33,7 @@ Important: Vercel's filesystem is ephemeral, so uploaded files and prediction hi
 ## Run locally
 
 ```bash
-python3 -m uvicorn app.main:app --reload
+python3 -m uvicorn server:app --reload
 ```
 
 Then open `http://127.0.0.1:8000`.
